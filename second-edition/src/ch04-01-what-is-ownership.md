@@ -1,24 +1,13 @@
 ## What Is Ownership?
 
-Rust’s central feature is *ownership*. Although the feature is straightforward
-to explain, it has deep implications for the rest of the language.
+Une fonctionalité centrale de Rust est l'*ownership*. Bien que le concept est simple à expliqué, il a une profonde implications au reste de langage.
 
-All programs have to manage the way they use a computer’s memory while running.
-Some languages have garbage collection that constantly looks for no longer used
-memory as the program runs; in other languages, the programmer must explicitly
-allocate and free the memory. Rust uses a third approach: memory is managed
-through a system of ownership with a set of rules that the compiler checks at
-compile time. No run-time costs are incurred for any of the ownership features.
+Tous les programmes doivent savoir gérer la mémoire pendant qu'il tourne. Plusieurs langages ont des *garbage collector* qui regardent constamment s'il n'y a pas de mémoire allouées non-utlisées pendant que le programme tourne; dans d'autres langages, les programmeurs doit explicitement allouer et libérer la mémoire. Rust utilise une troisième approche : la mémoire est gérée par le système de l'*ownership* avec des règles données vérifier pendant la compilation. Il n'y a donc pas de coût de *runtime*.
 
-Because ownership is a new concept for many programmers, it does take some time
-to get used to. The good news is that the more experienced you become with Rust
-and the rules of the ownership system, the more you’ll be able to naturally
-develop code that is safe and efficient. Keep at it!
+Parce que l'*ownership* est un nouveau concept pour beaucoup de programmeurs, il faut un certain temps pour l'apprivoiser. La bonnee nouvelles est que plus vous développez avec Rust, plus vous allez être capable de développez naturellement un code qui est sûre et efficace. Keep at it !
 
-When you understand ownership, you’ll have a solid foundation for understanding
-the features that make Rust unique. In this chapter, you’ll learn ownership by
-working through some examples that focus on a very common data structure:
-strings.
+Quand vous comprendrez la principe de l'*ownership*, vous aurez de solide fondations pour comprendre les fonctionnalités qui rendent Rust unique. Dans ce chapitre, vous apprendrai l'*ownership* en expliquant sur plusieurs exemples qui 
+se base sur une structure de données familiéres : les *strings*.   
 
 <!-- PROD: START BOX -->
 
