@@ -13,64 +13,19 @@ se base sur une structure de données familiéres : les *strings*.
 
 > ### The Stack and the Heap
 >
-> In many programming languages, we don’t have to think about the stack and the
-> heap very often. But in a systems programming language like Rust, whether a
-> value is on the stack or the heap has more of an effect on how the language
-> behaves and why we have to make certain decisions. We’ll describe parts of
-> ownership in relation to the stack and the heap later in this chapter, so here
-> is a brief explanation in preparation.
->
-> Both the stack and the heap are parts of memory that is available to your code
-> to use at runtime, but they are structured in different ways. The stack stores
-> values in the order it gets them and removes the values in the opposite order.
-> This is referred to as *last in, first out*. Think of a stack of plates: when
-> you add more plates, you put them on top of the pile, and when you need a
-> plate, you take one off the top. Adding or removing plates from the middle or
-> bottom wouldn’t work as well! Adding data is called *pushing onto the stack*,
-> and removing data is called *popping off the stack*.
->
-> The stack is fast because of the way it accesses the data: it never has to
-> search for a place to put new data or a place to get data from because that
-> place is always the top. Another property that makes the stack fast is that all
-> data on the stack must take up a known, fixed size.
->
-> For data with a size unknown to us at compile time or a size that might change,
-> we can store data on the heap instead. The heap is less organized: when we put
-> data on the heap, we ask for some amount of space. The operating system finds
-> an empty spot somewhere in the heap that is big enough, marks it as being in
-> use, and returns to us a pointer to that location. This process is called
-> *allocating on the heap*, and sometimes we abbreviate the phrase as just
-> “allocating.” Pushing values onto the stack is not considered allocating.
-> Because the pointer is a known, fixed size, we can store the pointer on the
-> stack, but when we want the actual data, we have to follow the pointer.
->
-> Think of being seated at a restaurant. When you enter, you state the number of
-> people in your group, and the staff finds an empty table that fits everyone and
-> leads you there. If someone in your group comes late, they can ask where you’ve
-> been seated to find you.
->
-> Accessing data in the heap is slower than accessing data on the stack because
-> we have to follow a pointer to get there. Contemporary processors are faster if
-> they jump around less in memory. Continuing the analogy, consider a server at a
-> restaurant taking orders from many tables. It’s most efficient to get all the
-> orders at one table before moving on to the next table. Taking an order from
-> table A, then an order from table B, then one from A again, and then one from B
-> again would be a much slower process. By the same token, a processor can do its
-> job better if it works on data that’s close to other data (as it is on the
-> stack) rather than farther away (as it can be on the heap). Allocating a large
-> amount of space on the heap can also take time.
->
-> When our code calls a function, the values passed into the function (including,
-> potentially, pointers to data on the heap) and the function’s local variables
-> get pushed onto the stack. When the function is over, those values get popped
-> off the stack.
->
-> Keeping track of what parts of code are using what data on the heap, minimizing
-> the amount of duplicate data on the heap, and cleaning up unused data on the
-> heap so we don’t run out of space are all problems that ownership addresses.
-> Once you understand ownership, you won’t need to think about the stack and the
-> heap very often, but knowing that managing heap data is why ownership exists
-> can help explain why it works the way it does.
+> Dans de nombreuses langues de programmation, nous ne devons pas penser à la pile et au tas très souvent. Mais dans un langage de programmation système comme Rust, qu'il s'agisse d'un qu’il s’agisse d’un valeur de la pile (stack en anglais) ou du tas (heap en anglais) a plus d'effet sur la façon dont le langage se comporte et c’est pourquoi nous devons prendre certaines décisions. Nous décrirons des parties de les propriétés de la pile et le tas plus tard dans ce chapitre, pour le moment, voici une brève explication pour vous préparer. La pile et le tas sont deux parties de la mémoire qui est disponible pour votre code à utiliser au moment de l'exécution, mais ils sont structurés de différentes façons. Les valeurs de la pile se stockent dans l'ordre où il les reçoit et supprime les valeurs dans l'ordre inverse. Ceci est appelé * last in, first out *. Pensez à une pile de tuiles: quand vous ajoutez plus de tuiles, vous les placez au dessus de la pile, et quand vous avez besoin d'une tuile, vous en prenez une au dessus. Ajouter ou enlever des plaques du milieu ou à partir du bas ne fonctionnerait pas aussi bien! L'ajout de données s'appelle *pushing onto the stack*, > Et supprimer les données s’appelle *popping off the stack*. 
+
+> La pile (stack) est rapide en raison de la façon dont elle accède aux données: elle ne doit jamais chercher un endroit où obtenir ou mettre de nouvelles données qu’elle les place toujours vers le haut. Une autre propriété qui rend la pile rapide est que toutes les données sur la pile doivent prendre une taille connue et fixe. 
+
+> Pour les données avec une taille inconnue pour nous au moment de la compilation ou d'une taille qui pourrait varier, nous pouvons stocker nos données sur le tas (heap) à la place. A la différence de la pile, le tas est moins organisé : lorsque nous mettons des données sur le tas, nous demandons une certaine quantité d'espace. Le système d'exploitation trouve un endroit vide quelque part dans le tas qui est assez grand, le marque comme étant dans utilisable, et nous retourne un pointeur vers cet emplacement. Ce processus s'appelle *allouer sur le tas*, et parfois nous abrégeons la phrase comme par « Allocation ». Le fait de mettre des valeurs sur la pile n'est pas considéré comme alloué. Étant donné que le pointeur est d’une taille connue et fixe, nous pouvons mémoriser le pointeur sur la pile, mais lorsque nous voulons les données réelles, nous devons suivre le pointeur.
+
+> Pensez à être assis dans un restaurant. Lorsque vous entrez, vous indiquez le nombre de personnes dans votre groupe et le personnel trouve une table vide qui s'adapte à tous puis vous conduit là-bas. Si quelqu'un dans votre groupe arrive en retard, le personnel peut dire où vous avez été assis pour vous trouver. 
+
+> L'accès aux données dans le tas est plus lent que l'accès aux données sur la pile, car nous devons suivre un pointeur pour y arriver. Les processeurs contemporains sont plus rapides s'ils se focalisent sur de la mémoires rapprochées. En continuant l'analogie, considérez un serveur à un restaurant recevant des commandes de plusieurs tables. Il est plus efficace d'obtenir tous les commandes d’une table avant de passer à la table suivante. Prendre une commande de table A, puis une commande de table B, puis une autre de A à nouveau, puis encore une de B. Ce serait encore une fois un processus beaucoup plus lent. De la même façon, un processeur peut faire un meilleur travail si cela fonctionne sur des données proches des autres données (comme c'est le cas sur la pile) plutôt que plus espacés entre eux (comme cela peut être sur le tas). L’allocation d’une grande zone mémoire sur le tas peut-être long.
+
+> Lorsque notre code appelle une fonction, les valeurs passées à la fonction (comprenant potentiellement les pointeurs des données vers le tas) et les variables locales de la fonction peuvent être stockées dans la pile. 
+
+> Lorsque la fonction est terminée, ces valeurs sont apparues hors de la pile. Suivre les parties du code qui utilisent les données sur le tas, en minimisant la quantité de données en double sur le tas et le nettoyage des données inutilisées sur le tas de sorte que nous ne manquons pas d'espace sont tous des problèmes auxquels se heurte l’ownership. Une fois que vous comprendrez l’ownership, vous n'aurez pas besoin de réfléchir à la pile et à la très souvent, mais savoir ce qu’est la gestion des données des tas et pourquoi l’ownership existe peut aider à expliquer pourquoi il fonctionne comme il le fait. 
 >
 <!-- PROD: END BOX -->
 
