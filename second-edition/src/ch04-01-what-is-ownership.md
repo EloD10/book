@@ -1,8 +1,8 @@
 ## What Is Ownership?
 
-Une fonctionalité centrale de Rust est l'*ownership*. Bien que le concept est simple à expliqué, il a une profonde implications au reste de langage.
+Une fonctionalitée centrale de Rust est l'*ownership*. Bien que le concept est simple à expliquer, il a une profonde implication au reste de langage.
 
-Tous les programmes doivent savoir gérer la mémoire pendant qu'il tourne. Plusieurs langages ont des *garbage collector* qui regardent constamment s'il n'y a pas de mémoire allouées non-utlisées pendant que le programme tourne; dans d'autres langages, les programmeurs doit explicitement allouer et libérer la mémoire. Rust utilise une troisième approche : la mémoire est gérée par le système de l'*ownership* avec des règles données vérifier pendant la compilation. Il n'y a donc pas de coût de *runtime*.
+Tous les programmes doivent savoir gérer la mémoire pendant qu'il tourne. Plusieurs langages ont des *garbage collector* qui regardent constamment s'il n'y a pas de mémoires allouées non-utlisées pendant que le programme tourne; dans d'autres langages, les programmeurs doivent explicitement allouer et libérer la mémoire. Rust utilise une troisième approche : la mémoire est gérée par le système de l'*ownership* avec des règles données vérifier pendant la compilation. Il n'y a donc pas de coût de *runtime*.
 
 Parce que l'*ownership* est un nouveau concept pour beaucoup de programmeurs, il faut un certain temps pour l'apprivoiser. La bonnee nouvelles est que plus vous développez avec Rust, plus vous allez être capable de développez naturellement un code qui est sûre et efficace. Keep at it !
 
