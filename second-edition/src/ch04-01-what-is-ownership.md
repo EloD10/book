@@ -1,10 +1,10 @@
 ## Qu'est ce que l'Ownership ?
 
-Une fonctionalitée centrale de Rust est l'*ownership*. Bien que le concept est simple à expliquer, il a une profonde implication au reste de langage.
+Une fonctionalité centrale de Rust est l'*ownership*. Bien que le concept soit simple à expliquer, il a une profonde implication au reste de langage.
 
-Tous les programmes doivent savoir gérer la mémoire pendant qu'il tourne. Plusieurs langages ont des *garbage collector* qui regardent constamment s'il n'y a pas de mémoires allouées non-utlisées pendant que le programme tourne; dans d'autres langages, les programmeurs doivent explicitement allouer et libérer la mémoire. Rust utilise une troisième approche : la mémoire est gérée par le système de l'*ownership* avec des règles données vérifier pendant la compilation. Il n'y a donc pas de coût de *runtime*.
+Tous les programmes doivent savoir gérer la mémoire pendant qu'il tourne. Plusieurs langages ont des *garbage collector* qui regardent constamment s'il n'y a pas de mémoires allouées non-utlisées pendant que le programme tourne ; dans d'autres langages, les programmeurs doivent explicitement allouer et libérer la mémoire. Rust utilise une troisième approche : la mémoire est gérée par le système de l'*ownership* avec des règles données vérifier pendant la compilation. Il n'y a donc pas de coût de *runtime*.
 
-Parce que l'*ownership* est un nouveau concept pour beaucoup de programmeurs, il faut un certain temps pour l'apprivoiser. La bonnee nouvelles est que plus vous développez avec Rust, plus vous allez être capable de développer naturellement un code qui est sûre et efficace. Keep at it !
+Parce que l'*ownership* est un nouveau concept pour beaucoup de programmeurs, il faut un certain temps pour l'apprivoiser. La bonne nouvelles est que plus vous développez avec Rust, plus vous allez être capable de développer naturellement un code qui est sûre et efficace. Keep at it !
 
 Quand vous comprendrez le principe de l'*ownership*, vous aurez de solide fondations pour comprendre les fonctionnalités qui rendent Rust unique. Dans ce chapitre, vous apprendrai l'*ownership* en expliquant sur plusieurs exemples qui 
 se base sur une structure de données familiéres : les *strings*.   
@@ -13,7 +13,7 @@ se base sur une structure de données familiéres : les *strings*.
 
 > ### La Pile et le Tas
 >
-> Dans de nombreuses langues de programmation, nous ne devons pas penser à la pile et au tas très souvent. Mais dans un langage de programmation système comme Rust, qu'il s'agisse d'un qu’il s’agisse d’une valeur de la pile (stack en anglais) ou du tas (heap en anglais) a plus d'effet sur la façon dont le langage se comporte et c’est pourquoi nous devons prendre certaines décisions. Nous décrirons des parties de les propriétés de la pile et le tas plus tard dans ce chapitre, pour le moment, voici une brève explication pour vous préparer. La pile et le tas sont deux parties de la mémoire qui est disponible pour votre code à utiliser au moment de l'exécution, mais ils sont structurés de différentes façons. Les valeurs de la pile se stockent dans l'ordre où il les reçoit et supprime les valeurs dans l'ordre inverse. Ceci est appelé * last in, first out *. Pensez à une pile de tuiles: quand vous ajoutez plus de tuiles, vous les placez au dessus de la pile, et quand vous avez besoin d'une tuile, vous en prenez une au-dessus. Ajouter ou enlever des plaques du milieu ou à partir du bas ne fonctionnerait pas aussi bien! L'ajout de données s'appelle *pushing onto the stack*, > Et supprimer les données s’appelle *popping off the stack*. 
+> Dans de nombreuses langues de programmation, nous ne devons pas penser à la pile et au tas très souvent. Mais dans un langage de programmation système comme Rust, qu'il s'agisse d'un qu’il s’agisse d’une valeur de la pile (stack en anglais) ou du tas (heap en anglais) a plus d'effet sur la façon dont le langage se comporte et c’est pourquoi nous devons prendre certaines décisions. Nous décrirons des parties de les propriétés de la pile et le tas plus tard dans ce chapitre, pour le moment, voici une brève explication pour vous préparer. La pile et le tas sont deux parties de la mémoire qui est disponible pour votre code à utiliser au moment de l'exécution, mais ils sont structurés de différentes façons. Les valeurs de la pile se stockent dans l'ordre où il les reçoit et supprime les valeurs dans l'ordre inverse. Ceci est appelé * last in, first out *. Pensez à une pile de tuiles: quand vous ajoutez plus de tuiles, vous les placez au-dessus de la pile, et quand vous avez besoin d'une tuile, vous en prenez une au-dessus. Ajouter ou enlever des plaques du milieu ou à partir du bas ne fonctionnerait pas aussi bien! L'ajout de données s'appelle *pushing onto the stack*, > Et supprimer les données s’appelle *popping off the stack*. 
 
 > La pile (stack) est rapide en raison de la façon dont elle accède aux données: elle ne doit jamais chercher un endroit où obtenir ou mettre de nouvelles données qu’elle les place toujours vers le haut. Une autre propriété qui rend la pile rapide est que toutes les données sur la pile doivent prendre une taille connue et fixe. 
 
@@ -63,7 +63,7 @@ valid</span>
 En d'autres termes, il existe deux points importants :
 
 1. Lorsque `s` entre * dans le scope*, il est valide.
-1. Il est valide jusqu'à ce qu'il *sorte du scope*.
+2. Il est valide jusqu'à ce qu'il *sorte du scope*.
 
 À ce stade, la relation entre le scope et quand les variables sont valides est similaire à d'autres langages de programmation. Maintenant, nous allons rajouter une couche par-dessus en s’intéressant au type `String`. 
 
